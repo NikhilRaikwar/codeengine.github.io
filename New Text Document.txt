@@ -1,0 +1,55 @@
+//{ Driver Code Starts
+// Initial Template for C++
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function Template for C++
+class Solution {
+  public:
+int maximum_profit(int n, vector<vector<int>> intervals) {
+    vector<int> dp(n+1, 0);
+    for (int i = 1; i <= n; i++) {
+        vector<int> interval = intervals[i-1];
+        int s = interval[0], e = interval[1], p = interval[2];
+        dp[i] = max(dp[i-1], dp[i]);
+        for (int j = i-1; j >= 0; j--) {
+            if (s > dp[j]) {
+                dp[i] = max(dp[i], dp[j-1] + p);
+            }
+        }
+    }
+    return dp[n];
+}
+
+int main() {
+    int n = 3;
+    vector<vector<int>> intervals = {{1, 2, 4}, {1, 5, 7}, {2, 4, 4}};
+    cout << maximum_profit(n, intervals) << endl; // 8
+    return 0;
+}
+
+
+};
+
+//{ Driver Code Starts.
+
+int main() {
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<vector<int>> intervals(n, vector<int>(3));
+        for (int i = 0; i < n; i++) {
+            cin >> intervals[i][0] >> intervals[i][1] >> intervals[i][2];
+        }
+        Solution obj;
+        cout << obj.maximum_profit(n, intervals) << endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
